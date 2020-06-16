@@ -104,7 +104,7 @@ public function edit($id, $id_company, $name, $email, $phone, $stars, $internal_
 	public function searchClientByName($name, $id_company) {
 		$array = array();
 
-		$sql = $this->db->prepare("SELECT name, id FROM clients WHERE name LIKE :name");
+		$sql = $this->db->prepare("SELECT name, id FROM clients WHERE name LIKE :name LIMIT 10");
 		$sql->bindValue(':name', '%'.$name.'%');
 		$sql->execute();
 

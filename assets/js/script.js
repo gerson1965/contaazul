@@ -19,10 +19,13 @@ $(function(){
 	$('#busca').on('blur', function(){
 		if($(this).val() ==''){
 		$(this).animate({
-			width:'100px'
-		},'fast');
+				width:'100px'
+			},'fast');
 		}	
-	});
+		setTimeout(function(){
+			$('.searchresults').hide();
+			}, 500);
+		});
 
 	$('#busca').on('keyup', function(){
 		var datatype = $(this).attr('data-type');
@@ -35,6 +38,23 @@ $(function(){
               data:{q:q},
               dataType:'json',
               success:function(json){
+              	if( $('.searchresults').length == 0){
+              		$('#busca').after('<div class="searchresults"></div>');
+              	}
+
+              	$('.searchresults').css('left', $('#busca').offset().left+'px');
+              	$('.searchresults').css('top', $('#busca').offset().top+$('#busca').height()+3+'px');
+
+              	var html ='';
+
+              	for (var i in json){
+              		html +='<div class="si"><a href="'+json[i].link+'">'+json[i].name+'</a></div>';
+              	}
+
+
+
+              	$('.searchresults').html(html);
+              	$('.searchresults').show();
               	
               }
               
